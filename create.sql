@@ -7,22 +7,49 @@ CREATE TABLE `users`(
     `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
-    `username` VARCHAR(100) NOT NULL COMMENT '用户名',
+    `username` VARCHAR(100) NOT NULL COMMENT '登录名',
     `password` VARCHAR(500) NOT NULL COMMENT 'md5摘要密码',
     `state` TINYINT(3) DEFAULT 0 COMMENT '状态',
-    `token` VARCHAR(500) DEFAULT '' COMMENT '验证标识',
-    `token_expire` TIMESTAMP COMMENT '标识过期时间',
-    `passenger_01_name` VARCHAR(100) COMMENT '常用乘车人姓名',
-    `passenger_01_id` VARCHAR(100) COMMENT '常用乘车人身份证号码',
-    `passenger_02_name` VARCHAR(100),
-    `passenger_02_id` VARCHAR(100),
-    `passenger_03_name` VARCHAR(100),
-    `passenger_03_id` VARCHAR(100),
-    `passenger_04_name` VARCHAR(100),
-    `passenger_04_id` VARCHAR(100),
-    `passenger_05_name` VARCHAR(100),
-    `passenger_05_id` VARCHAR(100)
+    `salt` VARCHAR(50) ,
+    `certificate_type` INT DEFAULT 0 COMMENT '证件类型',
+    `name` VARCHAR(50) NOT NULL COMMENT '用户名称',
+    `certificate_number` VARCHAR(50) NOT NULL COMMENT '证件号',
+    `phone_number` VARCHAR(50) NOT NULL COMMENT '手机号码',
+    `email` VARCHAR(50) DEFAULT '' COMMENT '电子邮件',
+    `passenger_type` INT DEFAULT 0 COMMENT '乘客类型 0为成人 1为学生'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户管理';
+
+CREATE TABLE `passenger` (
+    `id` INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
+    `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
+    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `deleted_at` TIMESTAMP COMMENT '软删除时间',
+    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `deleted_by` VARCHAR(100) COMMENT '删除人',
+
+    `name` VARCHAR(50) NOT NULL COMMENT '用户名称',
+    `certificate_type` INT DEFAULT 0 COMMENT '证件类型',
+    `certificate_number` VARCHAR(50) NOT NULL COMMENT '证件号',
+    `passenger_type` INT DEFAULT 0 COMMENT '乘客类型 0为成人 1为学生',
+    `state` TINYINT(3) DEFAULT 0 COMMENT '状态'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='乘车人信息';
+
+CREATE TABLE `user_passenger` (
+    `id` INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
+    `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
+    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `deleted_at` TIMESTAMP COMMENT '软删除时间',
+    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `deleted_by` VARCHAR(100) COMMENT '删除人',
+
+    `user_id` INT(10) UNSIGNED COMMENT '用户ID',
+    `passenger_id` INT(10) UNSIGNED COMMENT '乘客类型 0为成人 1为学生',
+    `phone_number` TINYINT(3) DEFAULT 0 COMMENT '状态',
+    CONSTRAINT fk_passenger_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_passenger_id FOREIGN KEY (passenger_id) REFERENCES passenger(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='乘车人信息';
 
 CREATE TABLE `orders`(
     `id` INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
@@ -39,7 +66,8 @@ CREATE TABLE `orders`(
     `affair_id` VARCHAR(100) NOT NULL COMMENT '业务单号',
     `expire_duration` INT(5) COMMENT '过期时间, 秒数',
     `order_outer_id` VARCHAR(100) NOT NULL UNIQUE COMMENT '订单外部id',
-    `state` TINYINT(3) COMMENT '状态,0未支付，1已支付，2已过期',
+    `state` TINYINT(3) COMMENT '状态,0未支付，1已支付，2已过期，3已改签',
+    `relative_order` INT(10) UNSIGNED NULL COMMENT '相关订单的id',
     CONSTRAINT fk_order_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单管理';
 
@@ -161,11 +189,11 @@ CREATE TABLE `candidates`(
 
 
 CREATE TABLE `tickets`(
-     `id` INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
-     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-     `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
-     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-     `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `id` INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
+    `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
+    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `deleted_at` TIMESTAMP COMMENT '软删除时间',
+    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
     `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
