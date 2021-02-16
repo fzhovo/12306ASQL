@@ -1,0 +1,1 @@
+INSERT INTO `12306a_test`.users (created_at, updated_at, deleted_at, created_by, updated_by, deleted_by, username, password, state, salt, certificate_type, name, certificate_number, phone_number, email, passenger_type) VALUES ('2021-02-16 21:51:21', '2021-02-16 21:51:23', null, 'system', null, null, '12306test', '12306', 0, '12306', 0, '12306', '12306', '12306', '12306', 0);

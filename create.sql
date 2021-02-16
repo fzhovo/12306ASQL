@@ -1,10 +1,10 @@
 CREATE TABLE `users`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `username` VARCHAR(100) NOT NULL COMMENT '登录名',
@@ -22,10 +22,10 @@ CREATE TABLE `users`(
 CREATE TABLE `passengers` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `name` VARCHAR(50) NOT NULL COMMENT '用户名称',
@@ -38,15 +38,15 @@ CREATE TABLE `passengers` (
 CREATE TABLE `user_passengers` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `user_id` INT UNSIGNED COMMENT '用户ID',
     `passenger_id` INT UNSIGNED COMMENT '乘客类型 0为成人 1为学生',
-    `phone_number` TINYINT(3) DEFAULT 0 COMMENT '状态',
+    `state` TINYINT(3) DEFAULT 0 COMMENT '状态',
     CONSTRAINT fk_passenger_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT fk_passenger_id FOREIGN KEY (passenger_id) REFERENCES passengers(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='乘车人信息';
@@ -54,19 +54,19 @@ CREATE TABLE `user_passengers` (
 CREATE TABLE `orders`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `user_id` INT UNSIGNED NOT NULL COMMENT '用户名',
-    `alipay_order_info` VARCHAR(500) NOT NULL COMMENT '支付宝的信息',
+    `alipay_order_info` VARCHAR(500) NULL COMMENT '支付宝的信息',
     `money` VARCHAR(100) NOT NULL COMMENT '支付金额',
     `affair_id` VARCHAR(100) NOT NULL COMMENT '业务单号',
-    `expire_duration` INT COMMENT '过期时间, 秒数',
+    `expire_duration` INT DEFAULT 1800 COMMENT '过期时间, 秒数',
     `outside_id` VARCHAR(100) NOT NULL UNIQUE COMMENT '订单外部id',
-    `state` TINYINT(3) COMMENT '状态,0未支付，1已支付，2已过期，3已改签',
+    `state` TINYINT(3) DEFAULT 0 COMMENT '状态,0未支付，1已支付，2已过期，3已改签',
     `relative_order` INT UNSIGNED NULL COMMENT '相关订单的id',
     CONSTRAINT fk_order_user_id FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单管理';
@@ -74,10 +74,10 @@ CREATE TABLE `orders`(
 CREATE TABLE `stations`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `name` VARCHAR(50) NOT NULL COMMENT '车站名',
@@ -89,10 +89,10 @@ CREATE TABLE `stations`(
 CREATE TABLE `train_types`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `type_number` VARCHAR(50) NOT NULL UNIQUE COMMENT '列车类型编号',
@@ -108,10 +108,10 @@ CREATE TABLE `train_types`(
 CREATE TABLE `carriage_types`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `soft_berth_number` INT DEFAULT 0 COMMENT '软卧数量',
@@ -133,10 +133,10 @@ CREATE TABLE `carriage_types`(
 CREATE TABLE `trains`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `number` VARCHAR(50) NOT NULL COMMENT '车次号',
@@ -150,16 +150,17 @@ CREATE TABLE `trains`(
 CREATE TABLE `stop_infos`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `train_id` INT UNSIGNED NOT NULL COMMENT '车次id 外键',
     `station_id`  INT UNSIGNED NOT NULL COMMENT '车站id 外键',
     `train_number` VARCHAR(50) NOT NULL COMMENT '车次编号',
     `station_name` VARCHAR(50) NOT NULL COMMENT '车站名',
+    `city` VARCHAR(50) NOT NULL COMMENT '车站所在城市',
     `arrived_time` VARCHAR(50) NOT NULL COMMENT '到达时间',
     `stay_duration` INT UNSIGNED DEFAULT 0 COMMENT '停留时间, 单位秒',
     `stay_num` INT UNSIGNED DEFAULT 0 COMMENT '停留序号',
@@ -171,14 +172,13 @@ CREATE TABLE `stop_infos`(
 CREATE TABLE `candidates`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `date` TIMESTAMP NOT NULL COMMENT '候补时间',
-    `start_time` TIMESTAMP NOT NULL COMMENT '发车时间',
     `train_id`  INT UNSIGNED NOT NULL COMMENT '候补车次id 外键',
     `order_id`  INT UNSIGNED NOT NULL COMMENT '订单id 外键',
     `user_id` INT UNSIGNED NOT NULL COMMENT '候补的用户id 外键',
@@ -195,10 +195,10 @@ CREATE TABLE `candidates`(
 CREATE TABLE `tickets`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `user_id` INT UNSIGNED NOT NULL COMMENT '用户id 外键',
@@ -219,10 +219,10 @@ CREATE TABLE `tickets`(
 CREATE TABLE `train_run_infos`(
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT '内部id',
     `created_at` TIMESTAMP NOT NULL COMMENT '创建时间',
-    `modified_at` TIMESTAMP COMMENT '最近一次修改时间',
+    `updated_at` TIMESTAMP COMMENT '最近一次修改时间',
     `deleted_at` TIMESTAMP COMMENT '软删除时间',
-    `create_by` VARCHAR(100) NOT NULL COMMENT '创建人',
-    `modified_by` VARCHAR(100) COMMENT '最后一次修改人',
+    `created_by` VARCHAR(100) NOT NULL COMMENT '创建人',
+    `updated_by` VARCHAR(100) COMMENT '最后一次修改人',
     `deleted_by` VARCHAR(100) COMMENT '删除人',
 
     `train_id` INT UNSIGNED NOT NULL COMMENT '车次id 外键',
