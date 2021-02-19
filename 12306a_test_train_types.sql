@@ -1,1 +1,0 @@
-INSERT INTO `12306a_test`.train_types (created_at, updated_at, deleted_at, created_by, updated_by, deleted_by, type_number, carriage_list, carriage_num, max_speed, wifi_state, fool_carriages, max_passenger, length) VALUES ('2021-02-16 21:12:25', '2021-02-16 21:12:26', null, 'system', null, null, 'CR400AF', '1,2,2,3,3,2,2,4', 8, 200, 0, '5', 588, 400);

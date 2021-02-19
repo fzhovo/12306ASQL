@@ -161,9 +161,9 @@ CREATE TABLE `stop_infos`(
     `train_number` VARCHAR(50) NOT NULL COMMENT '车次编号',
     `station_name` VARCHAR(50) NOT NULL COMMENT '车站名',
     `city` VARCHAR(50) NOT NULL COMMENT '车站所在城市',
-    `arrived_time` VARCHAR(50) NOT NULL COMMENT '到达时间',
-    `stay_duration` INT UNSIGNED DEFAULT 0 COMMENT '停留时间, 单位秒',
-    `stay_num` INT UNSIGNED DEFAULT 0 COMMENT '停留序号',
+    `arrived_time` VARCHAR(50) COMMENT '到达时间',
+    `leave_time` VARCHAR(50) COMMENT '离开时间',
+    `stop_seq` INT UNSIGNED DEFAULT 0 COMMENT '停留序号',
     CONSTRAINT fk_stop_info_train_id FOREIGN KEY (train_id) REFERENCES trains(id) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT fk_stop_info_station_id FOREIGN KEY (station_id) REFERENCES stations(id) ON DELETE RESTRICT ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='车次停留站点情况';
