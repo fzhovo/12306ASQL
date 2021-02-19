@@ -122,12 +122,12 @@ CREATE TABLE `carriage_types`(
     `first_seat_number` INT DEFAULT 0 COMMENT '一等座数量',
     `business_seat_number` INT DEFAULT 0 COMMENT '商务座数量',
     `business_seat` VARCHAR(200) DEFAULT '' COMMENT '商务座的全部编号',
-    `first_seat` VARCHAR(50) DEFAULT '' COMMENT '一等座开始编号，如A、B、E、F',
-    `second_seat` VARCHAR(50) DEFAULT '' COMMENT '二等座开始编号',
-    `hard_seat` VARCHAR(50) DEFAULT '' COMMENT '硬座开始编号',
-    `hard_berth` VARCHAR(50) DEFAULT '' COMMENT '硬卧开始编号',
-    `soft_berth` VARCHAR(50) DEFAULT '' COMMENT '软卧开始编号',
-    `senior_soft_berth` VARCHAR(50) DEFAULT '' COMMENT '高级软卧开始编号'
+    `first_seat` VARCHAR(500) DEFAULT '' COMMENT '一等座的全部编号逗号分隔，如A1,B1,E1,F1,A2,B2,E2,F2......',
+    `second_seat` VARCHAR(500) DEFAULT '' COMMENT '二等座的全部编号',
+    `hard_seat` VARCHAR(500) DEFAULT '' COMMENT '硬座的全部编号',
+    `hard_berth` VARCHAR(500) DEFAULT '' COMMENT '硬卧的全部编号',
+    `soft_berth` VARCHAR(500) DEFAULT '' COMMENT '软卧的全部编号',
+    `senior_soft_berth` VARCHAR(500) DEFAULT '' COMMENT '高级软卧的全部编号'
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='车厢类型';
 
 CREATE TABLE `trains`(
