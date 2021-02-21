@@ -1,1 +1,0 @@
-INSERT INTO `12306a_test`.passengers (created_at, updated_at, deleted_at, created_by, updated_by, deleted_by, name, certificate_type, certificate_number, passenger_type, state) VALUES ('2021-02-16 21:52:09', '2021-02-16 21:52:11', null, 'system', null, null, 'test', 0, '111111', 0, 0);
